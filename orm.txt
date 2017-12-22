@@ -1,0 +1,60 @@
+
+m app import db
+>>> from app.models import User, Post
+>>> u = User(username='swapneel', email='swapneel@shreshtait.com')
+>>> u
+<User swapneel>
+>>> db.session.add(u)
+>>> db.session.commit()
+>>>
+>>> u = User(username='Ira', email='swapneel@patnekar.com')
+>>> db.session.add(u)
+>>> db.session.commit()
+>>>
+>>> users = User.query.all()
+>>> users
+[<User swapneel>, <User Ira>]
+>>> for u in users:
+...     print(u.id, u.username)
+...
+1 swapneel
+2 Ira
+>>> u = User.query.get(1_
+  File "<stdin>", line 1
+    u = User.query.get(1_
+                        ^
+SyntaxError: invalid token
+>>> u = User.query.get(1)
+>>> u
+<User swapneel>
+>>> u = User.query.get(1)
+>>> p = Post(body='First article', author=u)
+>>> db.session.add(p)
+>>> db.session.commit()
+>>> u = User.query.get(1)
+>>> u
+<User swapneel>
+>>> posts = u.posts.all()
+>>> posts
+[<Post First article>]
+>>> u = User.query.get(2)
+>>> u
+<User Ira>
+>>> u.posts.all()
+[]
+>>> posts = Post.query.all()
+>>> for p in posts:
+...     print(p.author.username, p.body)
+...
+swapneel First article
+>>> User.query.order_by(User.username.desc()).all()
+[<User swapneel>, <User Ira>]
+>>> users = User.query.all()
+>>> for u in users:
+...     db.session.delete(u)
+...
+>>> posts = Post.query.all()
+>>> for p in posts:
+...     db.session.delete(p)
+...
+>>> db.session.commit()
