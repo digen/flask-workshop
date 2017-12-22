@@ -1,0 +1,10 @@
+>>> from werkzeug.security import generate_password_hash
+>>>
+>>> hash = generate_password_hash('foobar')
+>>> hash
+'pbkdf2:sha256:50000$Wh5ZYZvZ$95c97ba15abb9508ca5e3c4069839403bece0eda84cab69a5798b366b532e04c'
+>>> from werkzeug.security import check_password_hash
+>>> check_password_hash(hash, 'foobar')
+True
+>>> check_password_hash(hash, 'test')
+False
